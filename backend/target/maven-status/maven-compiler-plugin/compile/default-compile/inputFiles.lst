@@ -1,0 +1,11 @@
+/Users/shivamagarwal/Desktop/AI project/backend/src/main/java/com/ats/resumeanalyzer/ResumeAnalyzerApplication.java
+/Users/shivamagarwal/Desktop/AI project/backend/src/main/java/com/ats/resumeanalyzer/config/WebConfig.java
+/Users/shivamagarwal/Desktop/AI project/backend/src/main/java/com/ats/resumeanalyzer/controller/AtsController.java
+/Users/shivamagarwal/Desktop/AI project/backend/src/main/java/com/ats/resumeanalyzer/model/AnalysisResponse.java
+/Users/shivamagarwal/Desktop/AI project/backend/src/main/java/com/ats/resumeanalyzer/model/BulletPointAdjustment.java
+/Users/shivamagarwal/Desktop/AI project/backend/src/main/java/com/ats/resumeanalyzer/model/Education.java
+/Users/shivamagarwal/Desktop/AI project/backend/src/main/java/com/ats/resumeanalyzer/model/OptimizationResponse.java
+/Users/shivamagarwal/Desktop/AI project/backend/src/main/java/com/ats/resumeanalyzer/model/ParseResponse.java
+/Users/shivamagarwal/Desktop/AI project/backend/src/main/java/com/ats/resumeanalyzer/model/WorkExperience.java
+/Users/shivamagarwal/Desktop/AI project/backend/src/main/java/com/ats/resumeanalyzer/service/GeminiService.java
+/Users/shivamagarwal/Desktop/AI project/backend/src/main/java/com/ats/resumeanalyzer/service/ResumeParserService.java

@@ -1,0 +1,11 @@
+com/ats/resumeanalyzer/model/BulletPointAdjustment.class
+com/ats/resumeanalyzer/model/WorkExperience.class
+com/ats/resumeanalyzer/model/Education.class
+com/ats/resumeanalyzer/controller/AtsController.class
+com/ats/resumeanalyzer/ResumeAnalyzerApplication.class
+com/ats/resumeanalyzer/model/OptimizationResponse.class
+com/ats/resumeanalyzer/config/WebConfig.class
+com/ats/resumeanalyzer/model/ParseResponse.class
+com/ats/resumeanalyzer/service/GeminiService.class
+com/ats/resumeanalyzer/model/AnalysisResponse.class
+com/ats/resumeanalyzer/service/ResumeParserService.class
