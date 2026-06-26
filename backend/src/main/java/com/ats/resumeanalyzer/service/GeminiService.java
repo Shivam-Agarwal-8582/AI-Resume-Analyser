@@ -174,17 +174,7 @@ public class GeminiService {
 
         String jsonResponse = executeModel(userApiKey, prompt);
         try {
-            // Clean markdown blocks if LLM added them by chance
-            String cleanJson = jsonResponse.trim();
-            if (cleanJson.startsWith("```json")) {
-                cleanJson = cleanJson.substring(7);
-            } else if (cleanJson.startsWith("```")) {
-                cleanJson = cleanJson.substring(3);
-            }
-            if (cleanJson.endsWith("```")) {
-                cleanJson = cleanJson.substring(0, cleanJson.length() - 3);
-            }
-            cleanJson = cleanJson.trim();
+            String cleanJson = extractJson(jsonResponse);
             return objectMapper.readValue(cleanJson, AnalysisResponse.class);
         } catch (Exception e) {
             throw new RuntimeException("Failed to parse LLM analysis response as JSON. Response was: " + jsonResponse, e);
@@ -229,16 +219,7 @@ public class GeminiService {
 
         String jsonResponse = executeModel(userApiKey, prompt);
         try {
-            String cleanJson = jsonResponse.trim();
-            if (cleanJson.startsWith("```json")) {
-                cleanJson = cleanJson.substring(7);
-            } else if (cleanJson.startsWith("```")) {
-                cleanJson = cleanJson.substring(3);
-            }
-            if (cleanJson.endsWith("```")) {
-                cleanJson = cleanJson.substring(0, cleanJson.length() - 3);
-            }
-            cleanJson = cleanJson.trim();
+            String cleanJson = extractJson(jsonResponse);
             return objectMapper.readValue(cleanJson, ParseResponse.class);
         } catch (Exception e) {
             throw new RuntimeException("Failed to parse LLM parse response as JSON. Response was: " + jsonResponse, e);
@@ -278,19 +259,53 @@ public class GeminiService {
 
         String jsonResponse = executeModel(userApiKey, prompt);
         try {
-            String cleanJson = jsonResponse.trim();
-            if (cleanJson.startsWith("```json")) {
-                cleanJson = cleanJson.substring(7);
-            } else if (cleanJson.startsWith("```")) {
-                cleanJson = cleanJson.substring(3);
-            }
-            if (cleanJson.endsWith("```")) {
-                cleanJson = cleanJson.substring(0, cleanJson.length() - 3);
-            }
-            cleanJson = cleanJson.trim();
+            String cleanJson = extractJson(jsonResponse);
             return objectMapper.readValue(cleanJson, OptimizationResponse.class);
         } catch (Exception e) {
             throw new RuntimeException("Failed to parse LLM optimization response as JSON. Response was: " + jsonResponse, e);
         }
     }
+    /**
+     * Extracts a JSON substring from a potentially noisy LLM response.
+     * Looks for the first '{' and finds the matching closing '}' that balances braces.
+     * Falls back to stripping markdown fences if JSON cannot be balanced.
+     */
+    private String extractJson(String response) {
+        if (response == null) {
+            return "";
+        }
+        String trimmed = response.trim();
+        int start = trimmed.indexOf('{');
+        if (start == -1) {
+            return trimmed;
+        }
+        int depth = 0;
+        int end = -1;
+        for (int i = start; i < trimmed.length(); i++) {
+            char c = trimmed.charAt(i);
+            if (c == '{') {
+                depth++;
+            } else if (c == '}') {
+                depth--;
+                if (depth == 0) {
+                    end = i;
+                    break;
+                }
+            }
+        }
+        if (end != -1) {
+            return trimmed.substring(start, end + 1).trim();
+        }
+        // Fallback: strip markdown fences
+        if (trimmed.startsWith("```json")) {
+            trimmed = trimmed.substring(7);
+        } else if (trimmed.startsWith("```")) {
+            trimmed = trimmed.substring(3);
+        }
+        if (trimmed.endsWith("```")) {
+            trimmed = trimmed.substring(0, trimmed.length() - 3);
+        }
+        return trimmed.trim();
+    }
 }
+
